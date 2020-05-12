@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 	def top
-	end
+    end
 	def index
-		
+		@book = Book.new
 	end
-	def create
-
+	def list
+	end
 end

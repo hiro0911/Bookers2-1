@@ -7,4 +7,6 @@ resources :home
 get 'top' => 'users#top'
   root 'users#top'
   get 'home/about' => 'home#about'
+  get 'books/edit' => 'books#edit'
+  get 'users/list' => 'users#list'
 end
