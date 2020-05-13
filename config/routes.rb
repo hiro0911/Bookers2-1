@@ -11,6 +11,10 @@ get 'top' => 'users#top'
   root 'users#top'
   get 'home/about' => 'home#about'
   get 'books/edit' => 'books#edit'
-  get 'users/list' => 'users#list'
+  get 'users/user' => 'users#user'
   get 'users/edit' => 'users#edit'
+  get "users/:id" => "users#show"
+  get "books/:id" => "users#show"
+  get 'books/:id' => 'books#show'
+
 end

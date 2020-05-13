@@ -1,49 +1,4 @@
-<div class="body">
-      <div class="container">
-
-        <p id="notice"></p>
-
-
-      	
-
-<div class="row">
-  <div class="col-xs-3">
-    <h2>User info</h2>
-    <img class="attachment user profile_image fallback" src="/assets/no_image-ede28af4bad96368ef41be1b4be1cffce0d9402540f75d17895e32cb0d2af5e6.jpg" alt="No image"><table class="table">
-      <tbody><tr></tr> 
-      <tr>
-    	  <th>name</th>
-    	  <th><%= current_user.name %></th>
-      </tr>
-      <tr>
-    	  <th>introduction</th>
-    	  <th><%= @user.introduction %></th>
-      </tr>
-</tbody></table>
-
-<div class="row">
-  <a class="col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_17210" href="/users/17210/edit"></a>
-</div>
-
-    <h2>New book</h2>
-    <form class="new_book" id="new_book" action="/books" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="cCZJt8PlLhBdIf/OBVIHCwR2QzPrHdbyvpBy57BFhFwNYwuLyy/ci1kaCz2cbml3T1ebQSdrn8PtiZGenXLA0g==">
-  <div class="field row">
-    <label for="book_title">Title</label>
-    <input class="col-xs-12 book_title" type="text" name="book[title]" id="book_title">
-  </div>
-
-  <div class="field row">
-    <label for="book_opinion">Opinion</label>
-    <textarea class="col-xs-12 book_body" name="book[body]" id="book_body"></textarea>
-  </div>
-
-  <div class="actions row">
-    <input type="submit" name="commit" value="Create Book" class="btn btn-primary col-xs-12" data-disable-with="Create Book">
-  </div>
-</form>
-  </div>
-
-  <div class="col-xs-9">
+ <div class="col-xs-9">
     <h2>Books</h2>
 
     <table class="table table-hover table-inverse">
@@ -57,74 +12,25 @@
   </thead>
 
   <tbody>
+      <% @books.each do |book| %>
       <tr>
+        <td>
+          <%= link_to user_path(book.id) do %>
+          <%= attachment_image_tag book.user, :profile_image, :fill, 60, 60, format: 'jpeg', fallback: "default_icon.jpg" %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to "/books/show" do %>
+          <%= book.title %>
+          <% end %>
+        </td>
+        <td>
+          <%= book.body %>
+        </td>
+      </tr>
+      <% end %>
 
-        <td><a href="/users/17204">
-          <img class="attachment user profile_image fallback" src="/assets/no-image-icon-d3f9e11cb2bb284b42e0810f94b03c50126f51f482ea43054b87c2b7ebaa01d5.jpg" alt="No image icon">
-</a>        </td>
-        <td><a class="book_27671" href="/books/27671">test</a></td>
-        <td>test</td>
-      </tr>
-      <tr>
-        <td><a href="/users/17207">
-          <img class="attachment user profile_image fallback" src="/assets/no-image-icon-d3f9e11cb2bb284b42e0810f94b03c50126f51f482ea43054b87c2b7ebaa01d5.jpg" alt="No image icon">
-</a>        </td>
-        <td><a class="book_27672" href="/books/27672">m</a></td>
-        <td>j</td>
-      </tr>
-      <tr>
-        <td><a href="/users/17202">
-          <img class="attachment user profile_image fallback" src="/assets/no-image-icon-d3f9e11cb2bb284b42e0810f94b03c50126f51f482ea43054b87c2b7ebaa01d5.jpg" alt="No image icon">
-</a>        </td>
-        <td><a class="book_27664" href="/books/27664">test1</a></td>
-        <td>本文1</td>
-      </tr>
-      <tr>
-        <td><a href="/users/17202">
-          <img class="attachment user profile_image fallback" src="/assets/no-image-icon-d3f9e11cb2bb284b42e0810f94b03c50126f51f482ea43054b87c2b7ebaa01d5.jpg" alt="No image icon">
-</a>        </td>
-        <td><a class="book_27665" href="/books/27665">test2</a></td>
-        <td>本文2</td>
-      </tr>
-      <tr>
-        <td><a href="/users/17202">
-          <img class="attachment user profile_image fallback" src="/assets/no-image-icon-d3f9e11cb2bb284b42e0810f94b03c50126f51f482ea43054b87c2b7ebaa01d5.jpg" alt="No image icon">
-</a>        </td>
-        <td><a class="book_27666" href="/books/27666">test3</a></td>
-        <td>本文3</td>
-      </tr>
-      <tr>
-        <td><a href="/users/17203">
-          <img class="attachment user profile_image fallback" src="/assets/no-image-icon-d3f9e11cb2bb284b42e0810f94b03c50126f51f482ea43054b87c2b7ebaa01d5.jpg" alt="No image icon">
-</a>        </td>
-        <td><a class="book_27667" href="/books/27667">test4</a></td>
-        <td>本文4</td>
-      </tr>
-      <tr>
-        <td><a href="/users/17203">
-          <img class="attachment user profile_image fallback" src="/assets/no-image-icon-d3f9e11cb2bb284b42e0810f94b03c50126f51f482ea43054b87c2b7ebaa01d5.jpg" alt="No image icon">
-</a>        </td>
-        <td><a class="book_27668" href="/books/27668">test5</a></td>
-        <td>本文5</td>
-      </tr>
-      <tr>
-        <td><a href="/users/17203">
-          <img class="attachment user profile_image fallback" src="/assets/no-image-icon-d3f9e11cb2bb284b42e0810f94b03c50126f51f482ea43054b87c2b7ebaa01d5.jpg" alt="No image icon">
-</a>        </td>
-        <td><a class="book_27669" href="/books/27669">test6</a></td>
-        <td>本文6</td>
-      </tr>
-      <tr>
-        <td><a href="/users/17203">
-          <img class="attachment user profile_image fallback" src="/assets/no-image-icon-d3f9e11cb2bb284b42e0810f94b03c50126f51f482ea43054b87c2b7ebaa01d5.jpg" alt="No image icon">
-</a>        </td>
-        <td><a class="book_27670" href="/books/27670">test7</a></td>
-        <td>本文7</td>
-      </tr>
+
   </tbody>
 </table>
   </div>
-</div>
-
-      </div>
-    </div>

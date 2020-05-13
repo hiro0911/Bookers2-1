@@ -5,5 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
    has_many :books, dependent: :destroy
    attachment :profile_image # ここを追加
-
+   def books
+   return Book.where(user_id: self.id)
+   end
 end

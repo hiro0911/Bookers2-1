@@ -1,25 +1,27 @@
 class UsersController < ApplicationController
 	def create
        @user = current_user
-    if @user.save
-       redirect_to users_path(@user.id), notice: 'User was successfully created.'
-    else
-      render :top
-	end
+	    if @user.save
+	       redirect_to users_path(@user.id), notice: 'User was successfully created.'
+	    else
+	      render :top
+		end
+
     end
 	def top
     end
 	def index
 		@book = Book.new
+		@books = Book.all
         @user = current_user
 	end
-	def list
-	end
 	def show
-
+	    @book = Book.new
+	    @user = User.find(params[:id])
+	    @books = @user.books.order(created_at: :desc)
 	end
 	def new
-
+		@users = User.all
     end
     def edit
    		@user = current_user
