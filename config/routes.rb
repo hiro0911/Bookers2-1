@@ -13,14 +13,7 @@ get 'top' => 'users#top'
   get 'books/edit' => 'books#edit'
   get 'users/user' => 'users#user'
   get 'users/edit' => 'users#edit'
-  get "users/:id" => "users#show"
-  get "books/:id" => "users#show"
-  get 'books/:id' => 'books#show'
-  get 'users/:id' => 'books#show'
-  get 'sessions/new'
-  get 'sessions/create'
-  get 'sessions/destroy'
-  get     'login',   to: 'sessions#new'
-  post    'login',   to: 'sessions#create'
-  get     'logout',  to: 'sessions#destroy'
+delete 'books' => 'books#destroy'
+
+
 end

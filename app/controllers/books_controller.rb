@@ -1,25 +1,42 @@
 class BooksController < ApplicationController
-		before_action :ensure_correct_user,{only: [:edit,:update,:destroy]}
+		
 
 		def create
 		    @book = Book.new(book_params)
 	     	@book.user_id = current_user.id
 		if  @book.save
   # 作成に成功した場合、 /books/{book_id} にリダイレクト
-  			redirect_to users_path(current_user.id)
+  			redirect_to users_path(current_user.id), notice: "successfully"
 		else
   # 作成に失敗した場合、 /books/new に戻してバリデーションエラーを表示する
- 			 render template: "users/index"
+ 			redirect_to users_path(current_user.id), notice: "error"
   # view 側で、 @book.errors を使ってエラーを表示する。
 		end
 		end
-        def ensure_correct_user
-            @book = Book.find(params[:id])
-    	end
+		
+        def destroy
+		  @book = Book.find(params[:book_id])
+		  @book.destroy
+		  redirect_to users_path
+		  format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+		  format.json { head :no_content, notice: "erroe"}
+		end
         def show
-	        @user = current_user
+	        @user = User.current_user
 	        @book = Book.find(params[:id])
-	        @books = Book.new
+	        @users = User.all.order(created_at: :desc)
+	    end
+	    def edit
+	    	@book = Book.find(params[:id])
+	    	@book.update(book_params)
+	    end
+	    def update
+	    	@book = Book.find(params[:id])
+	    	　if@book.update(book_params)
+	    	    redirect_to book_path, notice: "successfully"
+	    	  else
+	    	  	redirect_to book_path, notice: "error"
+	    	  end
 	    end
 	    def index
 	    	@books = Book.all.order(created_at: :desc)
@@ -27,14 +44,9 @@ class BooksController < ApplicationController
 	    	@user = User.new
 	    	@users = User.all
 	    end
-	    def destroy
-		    @book = Book.find(params[:id])
-		    @book.destroy
-		    redirect_to books_path
-		end
         private
         def book_params
-        params.require(:book).permit(:title, :body, :user)
+        params.permit(:title, :body, :user_id)
         end
 
 end
