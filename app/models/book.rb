@@ -3,7 +3,7 @@ class Book < ApplicationRecord
 	def user
     #インスタンスメソッドないで、selfはインスタンス自身を表す
     return User.find_by(id: self.user_id)
-end
+    end
 validates :title, presence: true
-validates :body, presence: true, length {maximum: 200}
+validates :body, presence: true, length: {maximum: 200}
 end

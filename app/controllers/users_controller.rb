@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	
+
 	def create
        @user = current_user
 	    if @user.save
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 	def index
 		@book = Book.new
 		@books = Book.all
-       	@user = current_user
+       	@user = User.find(params[:id])
 
 	end
 	def show
@@ -37,6 +37,7 @@ class UsersController < ApplicationController
   	        render :index, notice: "successfully"
   	      else
   	      	render :index, notice: "error"
+  	      end
   	end
 	private
     def user_params

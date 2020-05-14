@@ -16,11 +16,13 @@ class BooksController < ApplicationController
 		
         def destroy
 		  @book = Book.find(params[:book_id])
-		  @book.destroy
-		  redirect_to users_path
-		  format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-		  format.json { head :no_content, notice: "erroe"}
-		end
+		  if@book.destroy
+		    format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+		    format.json { head :no_content }
+		  else
+		    redirect_to users_path, notice: "error"
+		  end
+		  
         def show
 	        @user = User.current_user
 	        @book = Book.find(params[:id])
@@ -32,10 +34,10 @@ class BooksController < ApplicationController
 	    end
 	    def update
 	    	@book = Book.find(params[:id])
-	    	　if@book.update(book_params)
+	    	  if@book.update(book_params)
 	    	    redirect_to book_path, notice: "successfully"
 	    	  else
-	    	  	redirect_to book_path, notice: "error"
+	    	  	render edit, notice: "error"
 	    	  end
 	    end
 	    def index
@@ -44,9 +46,11 @@ class BooksController < ApplicationController
 	    	@user = User.new
 	    	@users = User.all
 	    end
+        
+
         private
         def book_params
-        params.permit(:title, :body, :user_id)
+            params.permit(:title, :body, :user_id)
         end
 
 end
