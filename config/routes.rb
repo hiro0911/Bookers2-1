@@ -16,5 +16,11 @@ get 'top' => 'users#top'
   get "users/:id" => "users#show"
   get "books/:id" => "users#show"
   get 'books/:id' => 'books#show'
-
+  get 'users/:id' => 'books#show'
+  get 'sessions/new'
+  get 'sessions/create'
+  get 'sessions/destroy'
+  get     'login',   to: 'sessions#new'
+  post    'login',   to: 'sessions#create'
+  get     'logout',  to: 'sessions#destroy'
 end

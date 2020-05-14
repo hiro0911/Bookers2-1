@@ -17,11 +17,12 @@ class UsersController < ApplicationController
 	end
 	def show
 	    @book = Book.new
-	    @user = User.find(params[:id])
-	    @books = @user.books.order(created_at: :desc)
+	    @user = current_user
+	    @books = Book.all
 	end
 	def new
-		@users = User.all
+		@users = User.all.order(created_at: :desc)
+		@user = User.new
     end
     def edit
    		@user = current_user
@@ -36,6 +37,7 @@ class UsersController < ApplicationController
 	private
     def user_params
         params.require(:user).permit(:name, :profile_image, :introduction)
+
 	end
 
 end

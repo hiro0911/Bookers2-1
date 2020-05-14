@@ -6,12 +6,12 @@
       <tbody>
         <tr>
         <td>
-          <%= attachment_image_tag @book.user, :profile_image, :fill, 60, 60, format: 'jpeg', fallback: "default_icon.jpg" %><br>
-          <%= link_to "/user/show" do %>@user.name<% end %>
+          <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, format: 'jpeg', fallback: "default_icon.jpg" %><br>
+          <%= link_to "/users/show" do %><%= @user.name %><% end %>
             </td>
         <td><%= @book.title %></td>
         <td><%= @book.body %></td>
-        <td><% if @book.user_id == current_user %>
+        <td><% if @book.user == current_user %>
           <%= link_to "Edit", "/books/edit", class:"btn-sm btn-success edit_book_27812" %>
         </td>
         <td><%= link_to "Destroy", "/books/index", class:"btn-sm btn-danger destroy_book_27812", method: :delete, data: { confirm: '本当に消しますか?' } %>
