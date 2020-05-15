@@ -1,37 +1,38 @@
 class BooksController < ApplicationController
-		
+
 
 		def create
 		    @book = Book.new(book_params)
-	     	@book.user_id = current_user.id
-		if  @book.save
-  # 作成に成功した場合、 /books/{book_id} にリダイレクト
-  			redirect_to users_path(current_user.id), notice: "successfully"
-		else
-  # 作成に失敗した場合、 /books/new に戻してバリデーションエラーを表示する
- 			redirect_to users_path(current_user.id), notice: "error"
-  # view 側で、 @book.errors を使ってエラーを表示する。
+		  	@book.user_id = current_user.id
+		  	if @book.save
+		  		flash[:notice] = "successfully created book!"
+		     	redirect_to book_path(id: @book.id)
+		    else
+		      @user = current_user
+		      @books = Book.all.order(created_at: :desc)
+		      render :index
+		    end
 		end
-		end
-		
+
         def destroy
-		  @book = Book.find(params[:book_id])
-		  if@book.destroy
-		    format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-		    format.json { head :no_content }
-		  else
-		    redirect_to users_path, notice: "error"
-		  end
-		  
+		      book = Book.find(params[:id])
+			  book.destroy
+			  flash[:notice]="successfully delete!"
+			  redirect_to books_path
+		end
+
         def show
 	        @user = User.current_user
 	        @book = Book.find(params[:id])
 	        @users = User.all.order(created_at: :desc)
 	    end
 	    def edit
-	    	@book = Book.find(params[:id])
-	    	@book.update(book_params)
-	    end
+		  	@book = Book.find(params[:id])
+		    if @book.user_id != current_user.id
+		      flash[:notice] = "can't successfully access!"
+		      redirect_to user_path(@book.user_id)
+		    end
+        end
 	    def update
 	    	@book = Book.find(params[:id])
 	    	  if@book.update(book_params)
@@ -46,11 +47,11 @@ class BooksController < ApplicationController
 	    	@user = User.new
 	    	@users = User.all
 	    end
-        
+
 
         private
         def book_params
-            params.permit(:title, :body, :user_id)
+            params.require(:book).permit(:title,:body)
         end
 
 end

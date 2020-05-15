@@ -12,9 +12,9 @@ class UsersController < ApplicationController
 	def top
     end
 	def index
-		@book = Book.new
-		@books = Book.all
-       	@user = User.find(params[:id])
+	    @book = Book.new
+	    @user = current_user
+ 	    @books = @user.books.order(created_at: :desc)
 
 	end
 	def show
@@ -27,18 +27,20 @@ class UsersController < ApplicationController
 		@user = current_user
     end
     def edit
-   		@user = current_user
-
+   		    if @user.id != current_user.id
+         flash[:notice] = "can't successfully access!"
+         redirect_to user_path(current_user.id)
+    end
     end
 	def update
-		@book = Book.new
-	    @user = current_user
-	      if@user.update(user_params)
-  	        render :index, notice: "successfully"
-  	      else
-  	      	render :index, notice: "error"
-  	      end
-  	end
+	   @user = User.find(params[:id])
+    if @user.update(user_params)
+      flash[:notice] = "successfully update user!"
+      redirect_to user_path(@user.id)
+    else
+      render :edit
+    end
+  end
 	private
     def user_params
         params.require(:user).permit(:name, :profile_image, :introduction)
