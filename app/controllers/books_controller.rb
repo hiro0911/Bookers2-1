@@ -15,16 +15,13 @@ class BooksController < ApplicationController
 		end
 
         def destroy
-		      book = Book.find(params[:id])
-			  book.destroy
+			  @book.destroy
 			  flash[:notice]="successfully delete!"
 			  redirect_to books_path
 		end
 
         def show
-		  	  	@booker = Book.find(params[:id])
-			    @user = current_user
-			    @book= Book.new
+			    @book = Book.find(params[:id])
 	    end
 	    def edit
 		  	@book = Book.find(params[:id])
@@ -33,20 +30,21 @@ class BooksController < ApplicationController
 		      redirect_to user_path(@book.user_id)
 		    end
         end
-	    def update
-		    @user = User.find(params[:id])
-		    if @user.update(user_params)
-		      flash[:notice] = "successfully update user!"
-		      redirect_to user_path(@user.id)
-		    else
-		      render :edit
-		    end
-	    end
+	     def update
+        @book = Book.find(params[:id])
+        if @book.update(book_params)
+           flash[:notice] = "You have creatad book successfully."
+           redirect_to  book_path(@book.id)
+        else
+           @books = Book.all
+           flash[:notice]= ' errors prohibited this obj from being saved:'
+           render "edit"
+           end
+  	    end
 	    def index
 	    	@books = Book.all.order(created_at: :desc)
-	    	@book = Book.new
-	    	@user = User.new
-	    	@users = User.all
+	        @user = current_user
+            @book = Book.new
 	    end
 
 
