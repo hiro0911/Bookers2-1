@@ -22,9 +22,9 @@ class BooksController < ApplicationController
 		end
 
         def show
-	        @user = User.current_user
-	        @book = Book.find(params[:id])
-	        @users = User.all.order(created_at: :desc)
+		  	  	@booker = Book.find(params[:id])
+			    @user = current_user
+			    @book= Book.new
 	    end
 	    def edit
 		  	@book = Book.find(params[:id])
@@ -34,12 +34,13 @@ class BooksController < ApplicationController
 		    end
         end
 	    def update
-	    	@book = Book.find(params[:id])
-	    	  if@book.update(book_params)
-	    	    redirect_to book_path, notice: "successfully"
-	    	  else
-	    	  	render edit, notice: "error"
-	    	  end
+		    @user = User.find(params[:id])
+		    if @user.update(user_params)
+		      flash[:notice] = "successfully update user!"
+		      redirect_to user_path(@user.id)
+		    else
+		      render :edit
+		    end
 	    end
 	    def index
 	    	@books = Book.all.order(created_at: :desc)
@@ -50,8 +51,19 @@ class BooksController < ApplicationController
 
 
         private
-        def book_params
-            params.require(:book).permit(:title,:body)
-        end
+          def book_params
+        params.require(:book).permit(:title, :body)
+	    end
+
+	     def user_params
+	        params.require(:user).permit(:name,:profile_image,:introduction)
+	     end
+
+	     def  ensure_current_user
+	      @book = Book.find(params[:id])
+	     if @book.user_id != current_user.id
+	        redirect_to books_path
+	     end
+  end
 
 end
