@@ -7,10 +7,11 @@ resources :home
 get 'top' => 'users#top'
   root 'users#top'
   get 'home/about' => 'home#about'
-  get 'books/edit' => 'books#edit'
+  get 'books' => 'books#edit'
   get 'users/user' => 'users#user'
   get 'users/edit' => 'users#edit'
 delete 'books' => 'books#destroy'
+  get 'users' => "users#new"
 
 
 end

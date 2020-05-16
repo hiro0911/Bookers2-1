@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
-
+ before_action :authenticate_user!, only: [:index, :show, :edit, :new ]
 
 
 	def top
   end
 	def index
-	    @book = Book.new
-	    @user = current_user
- 	    @books = Book.all.order(created_at: :desc)
+    @user = current_user
+    @book = Book.new
+    @users = User.all.order(created_at: :desc)
 
 	end
 	def show
