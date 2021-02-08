@@ -64,5 +64,5 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'jquery-rails'
 gem "refile", require: "refile/rails", github: 'manfe/refile'
 gem "refile-mini_magick"
-gem 'carrierwave', '~> 1.3', '>= 1.3.1'
+gem 'carrierwave', '~> 1.3'
 gem 'did_you_mean', group: [:development, :test]
